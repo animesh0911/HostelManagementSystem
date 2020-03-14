@@ -1,0 +1,14 @@
+create database hostel_management1;
+use hostel_management1;
+create table login_signup(login_id varchar(30),email_id varchar(30),login_pass(15),primary key(email_id));
+create table hostel(hostel_id int primary key,hostel_name varchar(30),hostel_address varchar(50),hostel_contact varchar(10));
+create table rooms(room_no int, room_type varchar(20),room_capacity int ,room_availability varchar(20),hostel_id int,foreign key(hostel_id) references hostel(hostel_id),primary key(room_no,hostel_id));
+create table student(student_id int primary key,student_name varchar(30),student_address varchar(50),adhaarno varchar(12),email varchar(30),room_no int ,hostel_id int,reg_id varchar(12),year_of_engg int,DOB date,deposit int,foreign key(hostel_id) references hostel(hostel_id),foreign key(room_no) references rooms(room_no));
+create table student_contact(student_id int ,contact_no int ,primary key(student_id,contact_no),foreign key(student_id)references student(student_id));
+create table gaurdian(gaurdian_id int,gaurdian_name varchar(30), student_id int ,gaurdian_mobile varchar(10),email varchar(30),foreign key(student_id)references student(student_id),primary key(student_id,gaurdian_id));
+create table payment(payment_id int primary key AUTO_INCREMENT ,student_id int,payment_date date,amount int ,status varchar(20),foreign key(student_id)references student(student_id));
+create table attendance(student_id int,attendance_date date,present_absent char(1),foreign key(student_id)references student(student_id),primary key(student_id,attendance_date));
+create table leave2(leave_id int ,student_id int,startdate date,enddate date,foreign key(student_id) references student(student_id),primary key(leave_id));
+create table late(late_id int ,late_date date,late_time time,late_reason varchar(50),primary key(late_id));
+create table student_arrives_late(student_id int,late_id int,primary key(student_id,late_id),foreign key(student_id)references student(student_id),foreign key(late_id)references late(late_id));
+create table student_mobile(student_id int ,mobile_no int ,foreign key(student_id) references student(student_id),primary key(student_id,mobile_no));
